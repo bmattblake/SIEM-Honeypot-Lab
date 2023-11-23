@@ -29,7 +29,7 @@ Next, let's break down what we'll be doing :
 
 First, we will need to create a Microsoft Azure account. Microsoft offers new users $200 in Azure for free! You can sign up for your $200 in Azure credit here: [https://azure.microsoft.com/en-us/free/](https://azure.microsoft.com/en-us/free/)
 
-### Creating our Virtual Machine (VM) in Azure
+### 1.1 Creating our Virtual Machine (VM) in Azure
 
 After creating an Azure account, you will be directed to the Azure dashboard
 
@@ -107,5 +107,109 @@ Your new VM may possibly go through a validation process, wait for the validatio
 
 After our VM is created, it may take a while to be fully deployed. While we wait, we can set up our Log Analytics Workspace.
 
-### Setting Up our Log Analytics Workspace.
+### 1.2 Setting Up Our Log Analytics Workspace.
+
+To export our VM's logs to Azure we will need to create a logs analytics workspace within Azure.
+
+In the search bar at the top of the screen, search for "log analytics workspaces", and select the first option that appears.
+
+<figure><img src=".gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+
+Once you are brought to the Logs Analytics workspaces dashboard, select **Create log analytics workspace.**
+
+When creating our new logs analytics workspace, make sure to use out **honeypotlab** resource group, and select the region that is closest to you. the rest of the values don't matter much.&#x20;
+
+<figure><img src=".gitbook/assets/image (7).png" alt=""><figcaption></figcaption></figure>
+
+Select **Review + Create** at the bottom of the screen.
+
+Next, we have to connect our virtual machine to our log analytics workspace, so we can extract our VM's logs into Azure for processing.
+
+In the log analytics workspace left sidebar, scroll down to V**irtual machines**.&#x20;
+
+<figure><img src=".gitbook/assets/image (8).png" alt=""><figcaption></figcaption></figure>
+
+Select our VM from the list, and click **Connect**.
+
+It may take a while to connect our log analytics workspace to our VM. You will receive a notification when the process is done.
+
+<figure><img src=".gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
+
+Once our VM and our log analytics workspace are properly connected, we can move on to setting up Azure Sentinel which will act as our SIEM.
+
+### 1.3 Setting Up Our SIEM
+
+To process our logs into a digestible format, we'll use Microsoft Sentinel as a SIEM.
+
+In the Azure resources search bar at the top of the screen, search for "Microsoft Sentinel".
+
+<figure><img src=".gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
+
+Select **Microsoft Sentinel** under Services, then select **Create Microsoft Sentinel**.
+
+You will be redirected to the **Add Microsoft Sentinel to a workspace** page. Select the log analytics workspace that we created in step 1.2.
+
+<figure><img src=".gitbook/assets/Screenshot 2023-11-23 at 4.36.23 PM.png" alt=""><figcaption></figcaption></figure>
+
+Click **Add** at the bottom of the screen to complete the Microsoft Sentinel setup.
+
+## Stage 2: Establishing A Pipeline From VM To Azure
+
+Great! Our environment Seyup is complete. Next, we need to establish a pipeline between our VM and Azure so we can monitor any failed login attempts within Azure.
+
+&#x20;We will accomplish this by using a PowerShell Script that will run locally on the VM. It will monitor all Windows logs relating to remote login attempts, and export any useful information to an output file that Azure can use to process the data.
+
+### 2.1 Configuring Our Virtual Machine
+
+Let's start by remotely logging into our virtual machine.
+
+In the Azure Resources search box at the top of the screen, search for "virtual machines", and select the **Virtual machines** service.
+
+<figure><img src=".gitbook/assets/image (12).png" alt=""><figcaption></figcaption></figure>
+
+Here, we can see a list of virtual machines that have been created. Click the name of the the VM that we created in stage 1.1
+
+<figure><img src=".gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
+
+In the Virtual machine overview pane, take note of the **Public IP address**. My VM's Public IP is 172.178.95.126
+
+<figure><img src=".gitbook/assets/image (15).png" alt=""><figcaption></figcaption></figure>
+
+We can use this IP address to log into our VM via a remote desktop client. On Windows 10, this can be accomplished by following these steps:
+
+1. Search for "Remote Desktop Connection", in the start menu
+2. Hit **Enter**
+3. Enter our VM's Public IP address into the **Computer:** field
+4. Click **Connect**
+5. Enter the username and password that you specified for your VM in stage 1.1
+6. Select **OK**
+7. Accept any certificates that may be required for the connection
+
+On Mac/Linux you will have to use third-party to connect to our virtual machine.
+
+If all goes well, we should be able to see the desktop on our virtual machine.
+
+<figure><img src=".gitbook/assets/image (16).png" alt=""><figcaption></figcaption></figure>
+
+First, we'll need to disable Windows Defender Firewall on our VM. Disabling the firewall will allow attackers to try to establish connections with our honeypot.
+
+Inside of the VM:
+
+1. Open the **Start Menu**.
+2. Search for "wf.msc"
+3. Hit **Enter.**
+
+The Windows Defender Firewall window will appear. On the right side panel, click **Properties**. A new pop-up window will appear.
+
+In the **Domain Profile** tab, set the **Firewall State** to **Off**.
+
+<figure><img src=".gitbook/assets/Screenshot 2023-11-23 at 6.02.11 PM.png" alt=""><figcaption></figcaption></figure>
+
+Repeat the same process for the **private Profile** and **Public Profile** tab.
+
+Select **OK**.
+
+
+
+
 
