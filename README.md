@@ -77,15 +77,35 @@ Select the **Advanced** radio button. Some new options will appear.
 
 Under the combo box next to the **Configure network security group** field, select **Create new**.&#x20;
 
-You view all of the active firewall rules for the VM we are creating. &#x20;
+Here, we will be able to modify the firewall rules for the VM we are creating. &#x20;
 
-<figure><img src=".gitbook/assets/Screenshot 2023-11-23 at 3.11.39 PM.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/Screenshot 2023-11-23 at 3.18.58 PM.png" alt=""><figcaption></figcaption></figure>
 
+Remove the default security group by clicking the blue trash can on the right side of the screen.
 
+Next, we will make a new inbound rule by clicking **Add an inbound rule**.
 
+A panel will appear on the right side of your screen, allowing us to specify the rules of our new security group. We will keep all of the default values the same, but change the D**estination port ranges** field to "**\***"
 
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
+"**\***" acts as a wildcard, The rule parameter shown above will allow all network traffic to establish a connection with out VM.
 
+Confirm our rule by selecting **Add** at the bottom.
 
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
+Now, we can see our new inbound rule in our security group.
+
+<figure><img src=".gitbook/assets/Screenshot 2023-11-23 at 3.32.30 PM (2).png" alt=""><figcaption></figcaption></figure>
+
+Select **OK** at the bottom of the screen to confirm our new security group.
+
+Finally, at the bottom of the screen, select **Review + Create.**
+
+Your new VM may possibly go through a validation process, wait for the validation process to finish, and select **Create** at the bottom of the screen.
+
+After our VM is created, it may take a while to be fully deployed. While we wait, we can set up our Log Analytics Workspace.
+
+### Setting Up our Log Analytics Workspace.
 
