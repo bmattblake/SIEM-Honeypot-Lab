@@ -29,7 +29,63 @@ Next, let's break down what we'll be doing :
 
 First, we will need to create a Microsoft Azure account. Microsoft offers new users $200 in Azure for free! You can sign up for your $200 in Azure credit here: [https://azure.microsoft.com/en-us/free/](https://azure.microsoft.com/en-us/free/)
 
-After creating an Azure account, you should be directed to the Azure dashboard
+### Creating our Virtual Machine (VM) in Azure
+
+After creating an Azure account, you will be directed to the Azure dashboard
 
 <figure><img src=".gitbook/assets/azure_home.png" alt=""><figcaption><p>Azure Dashboard</p></figcaption></figure>
+
+At the top of the dashboard, click **Create a resource**. You will be brought to a panel that displays the resources that Azure provides.
+
+<figure><img src=".gitbook/assets/create_resource.png" alt=""><figcaption></figcaption></figure>
+
+Under **Virtual Machine**, select **Create**.
+
+We will need to enter some information about our VM before it can be deployed:
+
+* **Resource Group:** honeypotlab
+
+_We will need to create a new resource group to add our VM to. Select **Create new** under the **Resource Group** text box, and enter "honeypotlab"._
+
+<figure><img src=".gitbook/assets/new_rg.png" alt=""><figcaption></figcaption></figure>
+
+* **Virtual machine name:** honeypot-vm
+* **Region:** (Pick the region closest to your physical location)
+* **Image:** Windows 10 Pro x64
+* **Username:** (A username you can remember)
+* **Password:** (A password you can remember)
+
+The rest of the fields can be left as their default values.&#x20;
+
+Once all of the fields have been updated, your configuration should look something like this:
+
+<figure><img src=".gitbook/assets/create_vm1.png" alt=""><figcaption></figcaption></figure>
+
+<figure><img src=".gitbook/assets/create_vm2.png" alt=""><figcaption></figcaption></figure>
+
+<figure><img src=".gitbook/assets/create_vm3.png" alt=""><figcaption></figcaption></figure>
+
+<figure><img src=".gitbook/assets/create_vm4.png" alt=""><figcaption></figcaption></figure>
+
+Next, scroll up to the top and select **Networking**.
+
+Under the **Networking** tab, we will be modifying the **NIC network security group** field.&#x20;
+
+Select the **Advanced** radio button. Some new options will appear.
+
+<figure><img src=".gitbook/assets/Screenshot 2023-11-22 at 3.41.29 PM.png" alt=""><figcaption></figcaption></figure>
+
+Under the combo box next to the **Configure network security group** field, select **Create new**.&#x20;
+
+You view all of the active firewall rules for the VM we are creating. &#x20;
+
+<figure><img src=".gitbook/assets/Screenshot 2023-11-23 at 3.11.39 PM.png" alt=""><figcaption></figcaption></figure>
+
+
+
+
+
+
+
+
 
