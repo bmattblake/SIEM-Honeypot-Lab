@@ -27,11 +27,13 @@ First, let's define a couple of key terms:
 * **Honeypot:** A computer system that is intentionally made vulnerable to attract cyberattacks. It acts as a decoy, and is used to gain information about cybercriminals and their attack vectors. In this lab, we will deploy a Windows 10 virtual machine as our honeypot.
 * **SIEM (Security Information and Event Management):** Software that collects computer logs and reports any unusual or suspicious activity.
 
-Next, let's break down what we'll be doing. This lab has three stages:
+Next, let's break down what this lab includes. This lab has three stages:
 
 1. &#x20;Setting Up Our Cloud Environment
 2. &#x20;Establishing A Pipeline From Honeypot To Azure
 3. Plotting Attackers' Locations On A World Map
+
+If that sounds interesting to you, and you want to know more, feel free to continue reading.
 
 ## Stage 1: Setting Up Our Cloud Environment
 
@@ -39,9 +41,9 @@ First, we will need to create a Microsoft Azure account. Microsoft offers new us
 
 ### 1.1 Creating our Virtual Machine (VM) in Azure
 
-Our honeypot will be an extremely vulnerable VM hosted in the cloud. We will need an azure account to creat our VM, as well as a few other cloud resources that will be used throughout the duration of this lab
+Our honeypot will be an extremely vulnerable VM hosted in the cloud. We will need an azure account to creat our VM, as well as a few other cloud resources that will be used throughout the duration of this lab.
 
-After creating an Azure account, you will be directed to the Azure dashboard
+After creating an Azure account, you will be directed to the Azure dashboard.
 
 <figure><img src=".gitbook/assets/azure_home.png" alt=""><figcaption><p>Azure Dashboard</p></figcaption></figure>
 
