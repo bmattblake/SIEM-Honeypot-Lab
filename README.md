@@ -31,7 +31,7 @@ Next, let's break down what we'll be doing. This lab has three stages:
 
 1. &#x20;Setting Up Our Cloud Environment
 2. &#x20;Establishing A Pipeline From Honeypot To Azure
-3.
+3. Plotting Attackers' Locations On A World Map
 
 ## Stage 1: Setting Up Our Cloud Environment
 
