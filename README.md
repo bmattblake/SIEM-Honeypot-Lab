@@ -24,21 +24,7 @@ Below, I've documented a comprehensive outline detailing a four-stage process. T
 
 [#stage-1-setting-up-our-cloud-environment](./#stage-1-setting-up-our-cloud-environment "mention")
 
-[#1.1-creating-our-virtual-machine-vm-in-azure](./#1.1-creating-our-virtual-machine-vm-in-azure "mention")
-
-[#1.2-setting-up-our-log-analytics-workspace.](./#1.2-setting-up-our-log-analytics-workspace. "mention")
-
-[#1.3-setting-up-our-siem](./#1.3-setting-up-our-siem "mention")
-
 [#stage-2-establishing-a-pipeline-from-honeypot-to-azure](./#stage-2-establishing-a-pipeline-from-honeypot-to-azure "mention")
-
-[#2.1-configuring-our-honeypot](./#2.1-configuring-our-honeypot "mention")
-
-[#2.2-extracting-custom-logs](./#2.2-extracting-custom-logs "mention")
-
-[#2.3-configuring-custom-logs-in-azure](./#2.3-configuring-custom-logs-in-azure "mention")
-
-[#2.4-data-cleaning](./#2.4-data-cleaning "mention")
 
 [#stage-3-plotting-attackers-locations-on-a-world-map](./#stage-3-plotting-attackers-locations-on-a-world-map "mention")
 
