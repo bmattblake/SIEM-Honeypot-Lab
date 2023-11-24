@@ -6,11 +6,9 @@ description: >-
 
 # SIEM Honeypot Lab
 
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption><p>Heatmap - Geodata of attackers within Azure Sentinel (SIEM) - Ffailed RDP login attemps)</p></figcaption></figure>
 
-##
-
-## &#x20;TL;DR
+## TL;DR
 
 _**Technologies used**: Virtual Machines, Azure Log Analytics Workspace, Azure Sentinel (SIEM), PowerShell, Kusto Query Language (KQL), Geolocation API_
 
