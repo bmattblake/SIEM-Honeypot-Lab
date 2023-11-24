@@ -87,13 +87,11 @@ Next, we will make a new inbound rule by clicking **Add an inbound rule**.
 
 A panel will appear on the right side of your screen, allowing us to specify the rules of our new security group. We will keep all of the default values the same, but change the D**estination port ranges** field to "**\***"
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 "**\***" acts as a wildcard, The rule parameter shown above will allow all network traffic to establish a connection with out VM.
 
 Confirm our rule by selecting **Add** at the bottom.
-
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
 Now, we can see our new inbound rule in our security group.
 
@@ -113,13 +111,13 @@ To export our VM's logs to Azure we will need to create a logs analytics workspa
 
 In the search bar at the top of the screen, search for "log analytics workspaces", and select the first option that appears.
 
-<figure><img src=".gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
 
 Once you are brought to the Logs Analytics workspaces dashboard, select **Create log analytics workspace.**
 
 When creating our new logs analytics workspace, make sure to use out **honeypotlab** resource group, and select the region that is closest to you. the rest of the values don't matter much.&#x20;
 
-<figure><img src=".gitbook/assets/image (7).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (7) (1).png" alt=""><figcaption></figcaption></figure>
 
 Select **Review + Create** at the bottom of the screen.
 
@@ -127,13 +125,13 @@ Next, we have to connect our virtual machine to our log analytics workspace, so 
 
 In the log analytics workspace left sidebar, scroll down to V**irtual machines**.&#x20;
 
-<figure><img src=".gitbook/assets/image (8).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (8) (1).png" alt=""><figcaption></figcaption></figure>
 
 Select our VM from the list, and click **Connect**.
 
 It may take a while to connect our log analytics workspace to our VM. You will receive a notification when the process is done.
 
-<figure><img src=".gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (9) (1).png" alt=""><figcaption></figcaption></figure>
 
 Once our VM and our log analytics workspace are properly connected, we can move on to setting up Azure Sentinel which will act as our SIEM.
 
@@ -143,7 +141,7 @@ To process our logs into a digestible format, we'll use Microsoft Sentinel as a 
 
 In the Azure resources search bar at the top of the screen, search for "Microsoft Sentinel".
 
-<figure><img src=".gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (10) (1).png" alt=""><figcaption></figcaption></figure>
 
 Select **Microsoft Sentinel** under Services, then select **Create Microsoft Sentinel**.
 
@@ -208,6 +206,85 @@ In the **Domain Profile** tab, set the **Firewall State** to **Off**.
 Repeat the same process for the **private Profile** and **Public Profile** tab.
 
 Select **OK**.
+
+Now, our VM won't drop any network traffic from potential attackers
+
+### 2.2 Extracting Custom Logs
+
+Now we'll implement a PowerShell Script to parse the logs of failed login attempts and export them to a file that Azure can read.
+
+1. Open **PowerShell ISE** (**Start Menu > "Windows PowerShell ISE"**)
+2. Create. a new file (**File > New)**
+3. Copy the following PowerShell script into the text editor that appears: [https://github.com/joshmadakor1/Sentinel-Lab/blob/main/Custom\_Security\_Log\_Exporter.ps1](https://github.com/joshmadakor1/Sentinel-Lab/blob/main/Custom\_Security\_Log\_Exporter.ps1)
+4. Get a free API key from ipgeolocation.io (this API key be used to translate IP addresses of attackers to their physical locations)
+
+&#x20;      **Note**: getting the free version of the API will only allow up to 1000 requests per day.   100
+
+5. Enter your API key in the `$API_KEY` variable (line 2)
+6. Save the file as "log\_exporter.ps1" to your Desktop
+7. Click the **Run** button (Green play button) on the toolbar to run the script.
+
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+While this script is running Anytime a failed login occurs, the script will output information about the failed login in the output pane at the bottom
+
+<figure><img src=".gitbook/assets/Screenshot 2023-11-23 at 8.16.18 PM.png" alt=""><figcaption><p>Take note of the purple output at the bottom</p></figcaption></figure>
+
+This script will also write this data to "**C:\ProgramData\failed\_rdp.log**" in the local VM. That will be the log file that we use to export our custom logs to Azure.
+
+### 2.3 Configuring Custom Logs In Azure
+
+Next, we will have to configure our custom logs in Azure. To properly set up a pipeline between our VM and Azure, we will have to make some configuration changes to our log analytics workspace
+
+Navigate back to the log analytics workspace that we created back in stage 1.2 within the Azure portal.
+
+&#x20;In your log analytics workspace panel, select **Tables** on the right side-panel,&#x20;
+
+&#x20;Click **Create > New custom log (MMA-based)**
+
+<figure><img src=".gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+
+The custom log wizard will then ask for a sample log from the user. This sample file will be used to train or log analytics workspace to know what to look for when parsing our custom logs.
+
+Luckily, the PowerShell script that we ran in stage 2.2 has generated sample data for us, we just need to copy the contents of our output file from our VM to our local machine.
+
+1. Inside of the VM, navigate to "**C:\ProgramData\failed\_rdp.log**". (Note that the **ProgramData** folder is hidden by default).
+2. Copy the contents of that file to a new text file on your local machine
+
+<figure><img src=".gitbook/assets/image (6).png" alt=""><figcaption><p>Contents of my log export file on my local machine.</p></figcaption></figure>
+
+3. Upload the new text file to the custom log wizard
+
+<figure><img src=".gitbook/assets/image (7).png" alt=""><figcaption></figcaption></figure>
+
+Select **Next** at the bottom of the screen.
+
+The custom log wizard will ask for a specific delimiter. Ensure that **New line** is selected, and click **Next**.
+
+In the next tab (**Collection paths**), we will need to input the path of our output log file in the VM. This is how Azure will be fed new information about failed RDP login attempts.
+
+1. Select "Windows" from the **Type** combo box.
+2. Enter "**C:\ProgramData\failed\_rdp.log**" in the **Path** text field.
+
+<figure><img src=".gitbook/assets/image (8).png" alt=""><figcaption></figcaption></figure>
+
+Click **Next** at the bottom of the screen.
+
+In the **Details** panel, we can enter "FAILED\_RDP\_WITH\_GEO" as the custom log name, and click **Next**.
+
+You will be directed to a summary screen, click **Create**.
+
+Great!, now all of our rules should be set up. To confirm that our pipeline is working correctly, we can navigate to **Logs** in the left side panel in our log analytics workspace panel, and query the table `FAILED_RDP_WITH_`` `**`c`**`GEO`
+
+Sure enough, we can see our log data in the **RawData** column in our table. (**Note**: allow up to an hour for Azure to create the pipeline between our VM and Log Analytics workspaces)
+
+<figure><img src=".gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
+
+### 2.4 Data Cleaning
+
+Next, we will have to create custom columns to partition the data in our logs. As it is right now, all of our data is combined into one column, which does not allow us to do much with it. Let's separate our data into different columns so that longitude and latitude attributes have their own columns, The ip\_address attribute has its own column, etc.
+
+Expand the first row of our table, and
 
 
 
