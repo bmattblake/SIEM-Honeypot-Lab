@@ -10,7 +10,7 @@ description: >-
 
 ## &#x20;TL;DR
 
-_Technologies used: Virtual Machines, Azure Log Analytics Workspace, Azure Sentinel (SIEM), PowerShell, Kusto Query Language (KQL), Geolocation API_
+_**Technologies used**: Virtual Machines, Azure Log Analytics Workspace, Azure Sentinel (SIEM), PowerShell, Kusto Query Language (KQL), Geolocation API_
 
 In this lab, I created a honeypot virtual machine in the cloud and collected information about failed remote login attempts using Azure's **Log Analytics Workspace** Service. Finally, I used **Azure Sentinel** to process the logs and plot a heatmap of the attackers' locations on a world map to visualize where the attacks were coming from.
 
@@ -237,14 +237,14 @@ Now, our VM won't drop any network traffic from potential attackers
 
 ### 2.2 Extracting Custom Logs
 
-Now we'll implement a PowerShell Script to parse the logs of failed login attempts and export them to a file that Azure can read.
+Now we'll implement a PowerShell script to parse the logs of failed login attempts and export them to a file that Azure can read.
 
 1. Open **PowerShell ISE** (**Start Menu > "Windows PowerShell ISE"**)
 2. Create. a new file (**File > New)**
 3. Copy the following PowerShell script into the text editor that appears: [https://github.com/joshmadakor1/Sentinel-Lab/blob/main/Custom\_Security\_Log\_Exporter.ps1](https://github.com/joshmadakor1/Sentinel-Lab/blob/main/Custom\_Security\_Log\_Exporter.ps1)
 4. Get a free API key from ipgeolocation.io (this API key be used to translate IP addresses of attackers to their physical locations)
 
-&#x20;      **Note**: getting the free version of the API will only allow up to 1000 requests per day.   100
+**Note**: getting the free version of the API will only allow up to 1000 requests per day.  If you have the extra money, you may want to spend $15 on the bronze tier subscription for one month. This subscription will give you 150,000 API calls per month, which is more than enough for this lab.
 
 5. Enter your API key in the `$API_KEY` variable (line 2)
 6. Save the file as "log\_exporter.ps1" to your Desktop
@@ -275,7 +275,7 @@ The custom log wizard will then ask for a sample log from the user. This sample 
 Luckily, the PowerShell script that we ran in stage 2.2 has generated sample data for us, we just need to copy the contents of our output file from our VM to our local machine.
 
 1. Inside of the VM, navigate to "**C:\ProgramData\failed\_rdp.log**". (Note that the **ProgramData** folder is hidden by default).
-2. Copy the contents of that file to a new text file on your local machine
+2. Copy the contents of that **failed\_rdp.log** to a new text file on your local machine. This file exists outside of our VM and on our main computer.
 
 <figure><img src=".gitbook/assets/image (6).png" alt=""><figcaption><p>Contents of my log export file on my local machine.</p></figcaption></figure>
 
@@ -300,9 +300,11 @@ In the **Details** panel, we can enter "FAILED\_RDP\_WITH\_GEO" as the custom lo
 
 You will be directed to a summary screen, click **Create**.
 
-Great!, now all of our rules should be set up. To confirm that our pipeline is working correctly, we can navigate to **Logs** in the left side panel in our log analytics workspace panel, and query the table `FAILED_RDP_WITH_GEO`
+Great!, now all of our rules should be set up. To confirm that our pipeline is working correctly, we can navigate to **Logs** in the left side panel in our log analytics workspace , and query the table `FAILED_RDP_WITH_GEO`
 
-Sure enough, we can see our log data in the **RawData** column in our table. (**Note**: allow up to an hour for Azure to create the pipeline between our VM and Log Analytics workspaces)
+Sure enough, we can see our log data in the **RawData** column in our table.&#x20;
+
+**Note**: This new table may not be immediately available after creating our custom log. Allow up to an hour for Azure to create the pipeline between our VM and Log Analytics workspaces
 
 <figure><img src=".gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
 
@@ -312,7 +314,7 @@ Next, we will have to create custom columns to partition the data in our logs. A
 
 We can partition our parameters by using the following KQL query:
 
-```sql
+```clike
 FAILED_RDP_WITH_GEO_CL
 | extend username = extract(@"username:([^,]+)", 1, RawData),
          timestamp = extract(@"timestamp:([^,]+)", 1, RawData),
@@ -323,9 +325,9 @@ FAILED_RDP_WITH_GEO_CL
          label = extract(@"label:([^,]+)", 1, RawData),
          destination = extract(@"destinationhost:([^,]+)", 1, RawData),
          country = extract(@"country:([^,]+)", 1, RawData)
- |where destination != "samplehost"
- |where sourcehost != ""
- |summarize event_count=count() by timestamp, label, country, state, sourcehost, username, destination, longitude, latitude
+ | where destination != "samplehost"
+ | where sourcehost != ""
+ | summarize event_count=count() by timestamp, label, country, state, sourcehost, username, destination, longitude, latitude
 ```
 
 <figure><img src=".gitbook/assets/image (18).png" alt=""><figcaption><p>Formatted log data</p></figcaption></figure>
