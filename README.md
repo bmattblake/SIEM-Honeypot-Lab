@@ -12,7 +12,7 @@ description: >-
 
 _Technologies used: Virtual Machines, Azure Log Analytics Workspace, Azure Sentinel (SIEM), PowerShell, Kusto Query Language (KQL)_
 
-In this lab, I created a honeypot virtual machine in the cloud and collected information about failed remote login attempts using a SIEM. Using Azure Sentinel, I plotted a heatmap of the attackers' locations on a world map to visualize where the attacks were coming from.
+In this lab, I created a honeypot virtual machine in the cloud and collected information about failed remote login attempts using Azure's **Log Analytics Workspace** Service. Finally, I used **Azure Sentinel** to process the logs and plot a heatmap of the attackers' locations on a world map to visualize where the attacks were coming from.
 
 <figure><img src=".gitbook/assets/Introduction.png" alt=""><figcaption><p>Project Overview</p></figcaption></figure>
 
@@ -361,5 +361,17 @@ At this point, our home-lab in the cloud is completely autonomous. We can just s
 It doesn't take long for the red-hatters of the internet to find exposed machines on the public internet. You can leave this running in the cloud, and within 24 hours, you will have a colorful map with attacks from all around the world.
 
 As a reminder, when you are satisfied with your heat map, remember to shut down the **honeypotlab** resource group. All of these cloud resources can be quite expensive, and you definitely don't want any surprises at the end of the billing period.
+
+
+
+## Results
+
+### Results After 12 hours
+
+
+
+### Results After 24 Hours
+
+
 
 ### Results After 1 Week
