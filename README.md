@@ -229,7 +229,7 @@ In the **Domain Profile** tab, set the **Firewall State** to **Off**.
 
 <figure><img src=".gitbook/assets/Screenshot 2023-11-23 at 6.02.11 PM.png" alt=""><figcaption></figcaption></figure>
 
-Repeat the same process for the **private Profile** and **Public Profile** tab.
+Repeat the same process for the P**rivate Profile** and **Public Profile** tab.
 
 Select **OK**.
 
