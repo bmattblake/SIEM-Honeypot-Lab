@@ -370,8 +370,49 @@ As a reminder, when you are satisfied with your heat map, remember to shut down 
 
 
 
-### Results After 24 Hours
+### IResults After 24 Hours
 
 
 
 ### Results After 1 Week
+
+
+
+## Takeaways
+
+Before I even completed this lab, attacks already started rolling into The map, and That was only about 2 hours after deploying my virtual machine. I've definitely learned that It doesn't take long for the internet to find vulnerable systems on the public internet.
+
+Additionally, after completing this lab, I will never be using common usernames such as:
+
+* administrator
+* admin
+* user
+* guest
+* PC
+
+a majority of the failed RDP login attempts were using one of these usernames, and trying hundreds or even thousands of passwords for each. If I had used one of these usernames, there would've been a much higher chance of my honeypot getting breached.
+
+### Room For Improvement...
+
+#### Powershell May Not Be The Best Solution for Exporting Security Logs
+
+Using a PowerShell Script to collect information about failed RDP login attempts was more of a quick-and-dirty solution. Perhaps it would have been more of a streamlined process if I used software that was made for log collection such as Splunk.
+
+#### Only The Tip Of The Iceberg
+
+As it is, the heat map only shows data from failed RDP login attempts. However, We have opened all the ports on our honeypot in the cloud. There are most certainly other attacks happening to our system other than RDP credential brute-forcing. Attackers may be trying a whole host of other cyberattacks including but not limited to:
+
+* SMB credential brute-forcing
+* FTP credential brute-forcing
+* HTTP directory traversal request attempts
+
+There is likely a vast amount of data that we are not collecting, but I didn't want to collect too many logs at once, since I didn't want to use up all of my  IP geolocation API requests.
+
+### Technical Skills Learned
+
+**Microsoft Azure Cloud:** Before this lab, I was completely new to Azure Cloud. I learned how to combine multiple services with Azure to accomplish a specific task that I want to.
+
+**PowerShell**: I had very little experience with PowerShell before this lab. Using Powersheel to read system logs on a local machine was definitely a learning experience
+
+**Kusto Query Language (KQL):** I had never even heard of KPL before completing this lab. Using Azure's query language to clean the log data within Azure definitely took longer than expected, but it was well worth it.
+
