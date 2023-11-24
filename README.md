@@ -6,7 +6,7 @@ description: >-
 
 # SIEM Honeypot Lab
 
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption><p>Heatmap - Geodata of attackers within Azure Sentinel (SIEM) - Ffailed RDP login attemps)</p></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption><p>Heatmap - Geodata of attackers within Azure Sentinel (SIEM) - Failed RDP login attemps)</p></figcaption></figure>
 
 ## TL;DR
 
