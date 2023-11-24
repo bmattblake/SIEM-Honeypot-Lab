@@ -1,35 +1,45 @@
 ---
 description: >-
-  Using a SIEM to collect information about failed cyberattacks on a honeypot in
-  the cloud
+  Using a SIEM to collect geographic information about failed cyberattacks on a
+  honeypot in the cloud
 ---
 
 # SIEM Honeypot Lab
 
 (picture of heatmap goes here)
 
-## TL;DR
+## &#x20;TL;DR
+
+{% hint style="info" %}
+Technologies used: Virtual Machines, Azure Log Analytics Workspace, Azure Sentinel (SIEM), PowerShell, Kusto Query Language (KQL)
+{% endhint %}
 
 In this lab, I created a honeypot virtual machine in the cloud and collected information about failed remote login attempts using a SIEM. Using Azure Sentinel, I plotted a heatmap of the attackers' locations on a world map to visualize where the attacks were coming from.
+
+<figure><img src=".gitbook/assets/Introduction.png" alt=""><figcaption><p>Project Overview</p></figcaption></figure>
 
 Below, I've documented a comprehensive outline detailing a four-stage process. The following step-by-step guide is designed to facilitate seamless progression from start to finish.
 
 ## Introduction
 
-First, let's define a couple of key terms
+First, let's define a couple of key terms:
 
 * **Honeypot:** A computer system that is intentionally made vulnerable to attract cyberattacks. It acts as a decoy, and is used to gain information about cybercriminals and their attack vectors. In this lab, we will deploy a Windows 10 virtual machine as our honeypot.
 * **SIEM (Security Information and Event Management):** Software that collects computer logs and reports any unusual or suspicious activity.
 
-Next, let's break down what we'll be doing :
+Next, let's break down what we'll be doing. This lab has three stages:
 
-1.
+1. &#x20;Setting Up Our Cloud Environment
+2. &#x20;Establishing A Pipeline From Honeypot To Azure
+3.
 
-## Stage 1: Setting Up Our Environment
+## Stage 1: Setting Up Our Cloud Environment
 
 First, we will need to create a Microsoft Azure account. Microsoft offers new users $200 in Azure for free! You can sign up for your $200 in Azure credit here: [https://azure.microsoft.com/en-us/free/](https://azure.microsoft.com/en-us/free/)
 
 ### 1.1 Creating our Virtual Machine (VM) in Azure
+
+Our honeypot will be an extremely vulnerable VM hosted in the cloud. We will need an azure account to creat our VM, as well as a few other cloud resources that will be used throughout the duration of this lab
 
 After creating an Azure account, you will be directed to the Azure dashboard
 
@@ -151,13 +161,13 @@ You will be redirected to the **Add Microsoft Sentinel to a workspace** page. Se
 
 Click **Add** at the bottom of the screen to complete the Microsoft Sentinel setup.
 
-## Stage 2: Establishing A Pipeline From VM To Azure
+## Stage 2: Establishing A Pipeline From Honeypot To Azure
 
 Great! Our environment Seyup is complete. Next, we need to establish a pipeline between our VM and Azure so we can monitor any failed login attempts within Azure.
 
 &#x20;We will accomplish this by using a PowerShell Script that will run locally on the VM. It will monitor all Windows logs relating to remote login attempts, and export any useful information to an output file that Azure can use to process the data.
 
-### 2.1 Configuring Our Virtual Machine
+### 2.1 Configuring Our Honeypot
 
 Let's start by remotely logging into our virtual machine.
 
@@ -240,7 +250,7 @@ Navigate back to the log analytics workspace that we created back in stage 1.2 w
 
 &#x20;In your log analytics workspace panel, select **Tables** on the right side-panel,&#x20;
 
-&#x20;Click **Create > New custom log (MMA-based)**
+&#x20;Click **Create > New custom log (DCR-based)**
 
 <figure><img src=".gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
 
@@ -274,7 +284,7 @@ In the **Details** panel, we can enter "FAILED\_RDP\_WITH\_GEO" as the custom lo
 
 You will be directed to a summary screen, click **Create**.
 
-Great!, now all of our rules should be set up. To confirm that our pipeline is working correctly, we can navigate to **Logs** in the left side panel in our log analytics workspace panel, and query the table `FAILED_RDP_WITH_`` `**`c`**`GEO`
+Great!, now all of our rules should be set up. To confirm that our pipeline is working correctly, we can navigate to **Logs** in the left side panel in our log analytics workspace panel, and query the table `FAILED_RDP_WITH_GEO`
 
 Sure enough, we can see our log data in the **RawData** column in our table. (**Note**: allow up to an hour for Azure to create the pipeline between our VM and Log Analytics workspaces)
 
@@ -284,9 +294,72 @@ Sure enough, we can see our log data in the **RawData** column in our table. (**
 
 Next, we will have to create custom columns to partition the data in our logs. As it is right now, all of our data is combined into one column, which does not allow us to do much with it. Let's separate our data into different columns so that longitude and latitude attributes have their own columns, The ip\_address attribute has its own column, etc.
 
-Expand the first row of our table, and
+We can partition our parameters by using the following KQL query:
 
+```sql
+FAILED_RDP_WITH_GEO_CL
+| extend username = extract(@"username:([^,]+)", 1, RawData),
+         timestamp = extract(@"timestamp:([^,]+)", 1, RawData),
+         latitude = extract(@"latitude:([^,]+)", 1, RawData),
+         longitude = extract(@"longitude:([^,]+)", 1, RawData),
+         sourcehost = extract(@"sourcehost:([^,]+)", 1, RawData),
+         state = extract(@"state:([^,]+)", 1, RawData),
+         label = extract(@"label:([^,]+)", 1, RawData),
+         destination = extract(@"destinationhost:([^,]+)", 1, RawData),
+         country = extract(@"country:([^,]+)", 1, RawData)
+ |where destination != "samplehost"
+ |where sourcehost != ""
+ |summarize event_count=count() by timestamp, label, country, state, sourcehost, username, destination, longitude, latitude
+```
 
+<figure><img src=".gitbook/assets/image (18).png" alt=""><figcaption><p>Formatted log data</p></figcaption></figure>
 
+Great! Now that we have cleaned our data, It's time to process it into a more digestible format.
 
+## Stage 3: Plotting Attackers' Locations On A World Map
 
+Great! Now that we have cleaned our data, It's time to process it into a more digestible format.
+
+Using the Azure Resources search bar at the top of the screen, navigate to **Microsoft Sentinel.**
+
+<figure><img src=".gitbook/assets/image (19).png" alt=""><figcaption></figcaption></figure>
+
+Select our log analytics workspace from the list
+
+<figure><img src=".gitbook/assets/image (20).png" alt=""><figcaption></figcaption></figure>
+
+From the **Microsoft Sentinel** left side panel, select **Workbook > Add a workbook**
+
+Click **Edit** from the toolbar at the top.
+
+We can remove the two default widgets since we won't be needing them. Navigate to the **three dots** next to both widgets and click **Delete**.
+
+<figure><img src=".gitbook/assets/image (21).png" alt=""><figcaption></figcaption></figure>
+
+We now have an empty workbook that we can use as our heatmap.
+
+Select the **Add** dropdown, and click **Add query**.
+
+We will use the  KPL query from before as a data source for our new widget. Enter the KPL query in the text box.&#x20;
+
+Next, set the **Visualization** combo box to **Map.** In the **Map Settings** side panel, scroll down to the **Metric label** field, and set the value to "**label**".&#x20;
+
+<figure><img src=".gitbook/assets/Screenshot 2023-11-23 at 10.58.12 PM.png" alt=""><figcaption></figcaption></figure>
+
+As you can see, in the time it took me to set up this map, I have already gotten a few attacks from Europe, and The US east coast.
+
+We are done configuring our map, so we can save it.
+
+Click the **Save** button at the top of the toolbar to name the new workbook and assign it a resource group, then click **Apply**.
+
+<figure><img src=".gitbook/assets/image (22).png" alt=""><figcaption></figcaption></figure>
+
+## Finalization
+
+At this point, our home-lab in the cloud is completely autonomous. We can just sit back, relax, and watch our world map as the attacks come in.
+
+It doesn't take long for the red-hatters of the internet to find exposed machines on the public internet. You can leave this running in the cloud, and within 24 hours, you will have a colorful map with attacks from all around the world.
+
+As a reminder, when you are satisfied with your heat map, remember to shut down the **honeypotlab** resource group. All of these cloud resources can be quite expensive, and you definitely don't want any surprises at the end of the billing period.
+
+### Results After 1 Week
