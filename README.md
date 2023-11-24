@@ -10,7 +10,7 @@ description: >-
 
 ## &#x20;TL;DR
 
-_Technologies used: Virtual Machines, Azure Log Analytics Workspace, Azure Sentinel (SIEM), PowerShell, Kusto Query Language (KQL)_
+_Technologies used: Virtual Machines, Azure Log Analytics Workspace, Azure Sentinel (SIEM), PowerShell, Kusto Query Language (KQL), Geolocation API_
 
 In this lab, I created a honeypot virtual machine in the cloud and collected information about failed remote login attempts using Azure's **Log Analytics Workspace** Service. Finally, I used **Azure Sentinel** to process the logs and plot a heatmap of the attackers' locations on a world map to visualize where the attacks were coming from.
 
@@ -400,13 +400,7 @@ Using a PowerShell Script to collect information about failed RDP login attempts
 
 #### Only The Tip Of The Iceberg
 
-As it is, the heat map only shows data from failed RDP login attempts. However, We have opened all the ports on our honeypot in the cloud. There are most certainly other attacks happening to our system other than RDP credential brute-forcing. Attackers may be trying a whole host of other cyberattacks including but not limited to:
-
-* SMB credential brute-forcing
-* FTP credential brute-forcing
-* HTTP directory traversal request attempts
-
-There is likely a vast amount of data that we are not collecting, but I didn't want to collect too many logs at once, since I didn't want to use up all of my  IP geolocation API requests.
+As it is, the heat map only shows data from failed RDP login attempts. However, SMB is open by default on Azure cloud VMs. There are most certainly other attacks happening to our system other than RDP credential brute-forcing. Attackers may be trying to brute-force SMB credentials as well,  but I didn't want to collect too many logs at once, as that would use up all of my IP geolocation API requests.
 
 ### Technical Skills Learned
 
