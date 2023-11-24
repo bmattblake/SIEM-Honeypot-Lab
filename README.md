@@ -131,7 +131,7 @@ Your new VM may possibly go through a validation process, wait for the validatio
 
 After our VM is created, it may take a while to be fully deployed. While we wait, we can set up our Log Analytics Workspace.
 
-### 1.2 Setting Up Our Log Analytics Workspace.
+### 1.2 Setting Up Our Log Analytics Workspace
 
 To export our VM's logs to Azure we will need to create a logs analytics workspace within Azure.
 
