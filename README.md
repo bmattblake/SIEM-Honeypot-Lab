@@ -6,7 +6,9 @@ description: >-
 
 # SIEM Honeypot Lab
 
-(picture of heatmap goes here)
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+
+##
 
 ## &#x20;TL;DR
 
@@ -113,7 +115,7 @@ Next, we will make a new inbound rule by clicking **Add an inbound rule**.
 
 A panel will appear on the right side of your screen, allowing us to specify the rules of our new security group. We will keep all of the default values the same, but change the D**estination port ranges** field to "**\***"
 
-<figure><img src=".gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 "**\***" acts as a wildcard, The rule parameter shown above will allow all network traffic to establish a connection with out VM.
 
@@ -250,7 +252,7 @@ Now we'll implement a PowerShell script to parse the logs of failed login attemp
 6. Save the file as "log\_exporter.ps1" to your Desktop
 7. Click the **Run** button (Green play button) on the toolbar to run the script.
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
 
 While this script is running Anytime a failed login occurs, the script will output information about the failed login in the output pane at the bottom
 
@@ -386,7 +388,7 @@ As a reminder, when you are satisfied with your heat map, remember to shut down 
 
 ### Results After 12 hours
 
-
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
 ### IResults After 24 Hours
 
