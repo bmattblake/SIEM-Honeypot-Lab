@@ -386,7 +386,7 @@ As a reminder, when you are satisfied with your heat map, remember to shut down 
 
 ### Results After 12 hours
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/12h.png" alt=""><figcaption></figcaption></figure>
 
 ### IResults After 24 Hours
 
