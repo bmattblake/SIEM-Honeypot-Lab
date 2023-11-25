@@ -12,7 +12,7 @@ description: >-
 
 _**Technologies used**: Virtual Machines, Azure Log Analytics Workspace, Azure Sentinel (SIEM), PowerShell, Kusto Query Language (KQL), Geolocation API_
 
-In this lab, I created a honeypot virtual machine in the cloud and collected information about failed remote login attempts using Azure's **Log Analytics Workspace** Service. Finally, I used **Azure Sentinel** to process the logs and plot a heatmap of the attackers' locations on a world map to visualize where the attacks were coming from.
+In this lab, I created a vulnerable virtual machine, and deployed it to the public internet to serve as a honeypot. I then ingested logs regarding failed remote login attempts Into Azure using Azure's **Log Analytics Workspace** service. Finally, I used **Azure Sentinel** to process the logs and plot a heatmap of the attackers' locations on a world map to visualize where the attacks were coming from.
 
 <figure><img src=".gitbook/assets/Introduction.png" alt=""><figcaption><p>Project Overview</p></figcaption></figure>
 
