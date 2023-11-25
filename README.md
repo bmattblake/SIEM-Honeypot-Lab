@@ -4,7 +4,7 @@ description: >-
   honeypot in the cloud
 ---
 
-# SIEM Honeypot Lab
+# Using Microsoft Sentinel SIEM to Monitor a Honeypot Within Azure
 
 <figure><img src=".gitbook/assets/24h.png" alt=""><figcaption><p>Heatmap - Geodata of attackers within Azure Sentinel (SIEM) - Failed RDP login attemps)</p></figcaption></figure>
 
