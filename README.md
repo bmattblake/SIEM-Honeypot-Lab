@@ -4,7 +4,7 @@ description: >-
   honeypot in the cloud
 ---
 
-# Using Microsoft Sentinel SIEM to Monitor a Honeypot Within Azure
+# SIEM Honeypot Lab
 
 <figure><img src=".gitbook/assets/24h.png" alt=""><figcaption><p>Heatmap - Geodata of attackers within Azure Sentinel (SIEM) - Failed RDP login attemps)</p></figcaption></figure>
 
@@ -43,8 +43,8 @@ First, let's define a couple of key terms:
 
 Next, let's break down what this lab includes. This lab has three stages:
 
-1. &#x20;Setting Up Our Cloud Environment
-2. &#x20;Establishing A Pipeline From Honeypot To Azure
+1. Setting Up Our Cloud Environment
+2. Establishing A Pipeline From Honeypot To Azure
 3. Plotting Attackers' Locations On A World Map
 
 If that sounds interesting to you, and you want to know more, feel free to continue reading.
@@ -53,9 +53,11 @@ If that sounds interesting to you, and you want to know more, feel free to conti
 
 First, we will need to create a Microsoft Azure account. Microsoft offers new users $200 in Azure for free! You can sign up for your $200 in Azure credit here: [https://azure.microsoft.com/en-us/free/](https://azure.microsoft.com/en-us/free/)
 
+Don't worry if you aren't eligible for Azure's free trial. This lab will only cost around $5 to complete.
+
 ### 1.1 Creating our Virtual Machine (VM) in Azure
 
-Our honeypot will be an extremely vulnerable VM hosted in the cloud. We will need an azure account to creat our VM, as well as a few other cloud resources that will be used throughout the duration of this lab.
+Our honeypot will be an extremely vulnerable VM hosted in the cloud. We will need an Azure account to create our VM, as well as a few other cloud resources that will be used throughout the duration of this lab.
 
 After creating an Azure account, you will be directed to the Azure dashboard.
 
@@ -81,7 +83,7 @@ _We will need to create a new resource group to add our VM to. Select **Create n
 * **Username:** (A username you can remember)
 * **Password:** (A password you can remember)
 
-The rest of the fields can be left as their default values.&#x20;
+The rest of the fields can be left as their default values.
 
 Once all of the fields have been updated, your configuration should look something like this:
 
@@ -95,15 +97,15 @@ Once all of the fields have been updated, your configuration should look somethi
 
 Next, scroll up to the top and select **Networking**.
 
-Under the **Networking** tab, we will be modifying the **NIC network security group** field.&#x20;
+Under the **Networking** tab, we will be modifying the **NIC network security group** field.
 
 Select the **Advanced** radio button. Some new options will appear.
 
 <figure><img src=".gitbook/assets/Screenshot 2023-11-22 at 3.41.29 PM.png" alt=""><figcaption></figcaption></figure>
 
-Under the combo box next to the **Configure network security group** field, select **Create new**.&#x20;
+Under the combo box next to the **Configure network security group** field, select **Create new**.
 
-Here, we will be able to modify the firewall rules for the VM we are creating. &#x20;
+Here, we will be able to modify the firewall rules for the VM we are creating.
 
 <figure><img src=".gitbook/assets/Screenshot 2023-11-23 at 3.18.58 PM.png" alt=""><figcaption></figcaption></figure>
 
@@ -141,7 +143,7 @@ In the search bar at the top of the screen, search for "log analytics workspaces
 
 Once you are brought to the Logs Analytics workspaces dashboard, select **Create log analytics workspace.**
 
-When creating our new logs analytics workspace, make sure to use out **honeypotlab** resource group, and select the region that is closest to you. the rest of the values don't matter much.&#x20;
+When creating our new logs analytics workspace, make sure to use out **honeypotlab** resource group, and select the region that is closest to you. the rest of the values don't matter much.
 
 <figure><img src=".gitbook/assets/image (7) (1).png" alt=""><figcaption></figcaption></figure>
 
@@ -149,7 +151,7 @@ Select **Review + Create** at the bottom of the screen.
 
 Next, we have to connect our virtual machine to our log analytics workspace, so we can extract our VM's logs into Azure for processing.
 
-In the log analytics workspace left sidebar, scroll down to V**irtual machines**.&#x20;
+In the log analytics workspace left sidebar, scroll down to V**irtual machines**.
 
 <figure><img src=".gitbook/assets/image (8) (1).png" alt=""><figcaption></figcaption></figure>
 
@@ -181,7 +183,7 @@ Click **Add** at the bottom of the screen to complete the Microsoft Sentinel set
 
 Great! Our environment Seyup is complete. Next, we need to establish a pipeline between our VM and Azure so we can monitor any failed login attempts within Azure.
 
-&#x20;We will accomplish this by using a PowerShell Script that will run locally on the VM. It will monitor all Windows logs relating to remote login attempts, and export any useful information to an output file that Azure can use to process the data.
+We will accomplish this by using a PowerShell Script that will run locally on the VM. It will monitor all Windows logs relating to remote login attempts, and export any useful information to an output file that Azure can use to process the data.
 
 ### 2.1 Configuring Our Honeypot
 
@@ -244,7 +246,7 @@ Now we'll implement a PowerShell script to parse the logs of failed login attemp
 3. Copy the following PowerShell script into the text editor that appears: [https://github.com/joshmadakor1/Sentinel-Lab/blob/main/Custom\_Security\_Log\_Exporter.ps1](https://github.com/joshmadakor1/Sentinel-Lab/blob/main/Custom\_Security\_Log\_Exporter.ps1)
 4. Get a free API key from ipgeolocation.io (this API key be used to translate IP addresses of attackers to their physical locations)
 
-**Note**: getting the free version of the API will only allow up to 1000 requests per day.  If you have the extra money, you may want to spend $15 on the bronze tier subscription for one month. This subscription will give you 150,000 API calls per month, which is more than enough for this lab.
+**Note**: getting the free version of the API will only allow up to 1000 requests per day. If you have the extra money, you may want to spend $15 on the bronze tier subscription for one month. This subscription will give you 150,000 API calls per month, which is more than enough for this lab.
 
 5. Enter your API key in the `$API_KEY` variable (line 2)
 6. Save the file as "log\_exporter.ps1" to your Desktop
@@ -264,9 +266,9 @@ Next, we will have to configure our custom logs in Azure. To properly set up a p
 
 Navigate back to the log analytics workspace that we created back in stage 1.2 within the Azure portal.
 
-&#x20;In your log analytics workspace panel, select **Tables** on the right side-panel,&#x20;
+In your log analytics workspace panel, select **Tables** on the right side-panel,
 
-&#x20;Click **Create > New custom log (DCR-based)**
+Click **Create > New custom log (DCR-based)**
 
 <figure><img src=".gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
 
@@ -300,9 +302,9 @@ In the **Details** panel, we can enter "FAILED\_RDP\_WITH\_GEO" as the custom lo
 
 You will be directed to a summary screen, click **Create**.
 
-Great!, now all of our rules should be set up. To confirm that our pipeline is working correctly, we can navigate to **Logs** in the left side panel in our log analytics workspace , and query the table `FAILED_RDP_WITH_GEO`
+Great!, now all of our rules should be set up. To confirm that our pipeline is working correctly, we can navigate to **Logs** in the left side panel in our log analytics workspace, and query the table `FAILED_RDP_WITH_GEO`
 
-Sure enough, we can see our log data in the **RawData** column in our table.&#x20;
+Sure enough, we can see our log data in the **RawData** column in our table.
 
 **Note**: This new table may not be immediately available after creating our custom log. Allow up to an hour for Azure to create the pipeline between our VM and Log Analytics workspaces
 
@@ -358,9 +360,9 @@ We now have an empty workbook that we can use as our heatmap.
 
 Select the **Add** dropdown, and click **Add query**.
 
-We will use the  KQL query from before as a data source for our new widget. Enter the KQL query in the text box.&#x20;
+We will use the KQL query from before as a data source for our new widget. Enter the KQL query in the text box.
 
-Next, set the **Visualization** combo box to **Map.** In the **Map Settings** side panel, scroll down to the **Metric label** field, and set the value to "**label**".&#x20;
+Next, set the **Visualization** combo box to **Map.** In the **Map Settings** side panel, scroll down to the **Metric label** field, and set the value to "**label**".
 
 <figure><img src=".gitbook/assets/Screenshot 2023-11-23 at 10.58.12 PM.png" alt=""><figcaption></figcaption></figure>
 
@@ -379,8 +381,6 @@ At this point, our home-lab in the cloud is completely autonomous. We can just s
 It doesn't take long for the red-hatters of the internet to find exposed machines on the public internet. You can leave this running in the cloud, and within 24 hours, you will have a colorful map with attacks from all around the world.
 
 As a reminder, when you are satisfied with your heat map, remember to shut down the **honeypotlab** resource group. All of these cloud resources can be quite expensive, and you definitely don't want any surprises at the end of the billing period.
-
-
 
 ## Results
 
@@ -414,7 +414,7 @@ Using a PowerShell Script to collect information about failed RDP login attempts
 
 #### Only The Tip Of The Iceberg
 
-As it is, the heat map only shows data from failed RDP login attempts. However, SMB is open by default on Azure cloud VMs. There are most certainly other attacks happening to our system other than RDP credential brute-forcing. Attackers may be trying to brute-force SMB credentials as well,  but I didn't want to collect too many logs at once, as that would use up all of my IP geolocation API requests.
+As it is, the heat map only shows data from failed RDP login attempts. However, SMB is open by default on Azure cloud VMs. There are most certainly other attacks happening to our system other than RDP credential brute-forcing. Attackers may be trying to brute-force SMB credentials as well, but I didn't want to collect too many logs at once, as that would use up all of my IP geolocation API requests.
 
 ### Technical Skills Learned
 
@@ -423,4 +423,3 @@ As it is, the heat map only shows data from failed RDP login attempts. However, 
 **PowerShell**: I had very little experience with PowerShell before this lab. Using Powersheel to read system logs on a local machine was definitely a learning experience
 
 **Kusto Query Language (KQL):** I had never used KQL before completing this lab. Learning to use Azure's query language to clean the log data within Azure definitely took longer than expected, but it was well worth it.
-
