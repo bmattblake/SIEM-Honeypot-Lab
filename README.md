@@ -358,7 +358,7 @@ We now have an empty workbook that we can use as our heatmap.
 
 Select the **Add** dropdown, and click **Add query**.
 
-We will use the  KPL query from before as a data source for our new widget. Enter the KPL query in the text box.&#x20;
+We will use the  KQL query from before as a data source for our new widget. Enter the KQL query in the text box.&#x20;
 
 Next, set the **Visualization** combo box to **Map.** In the **Map Settings** side panel, scroll down to the **Metric label** field, and set the value to "**label**".&#x20;
 
@@ -426,5 +426,5 @@ As it is, the heat map only shows data from failed RDP login attempts. However, 
 
 **PowerShell**: I had very little experience with PowerShell before this lab. Using Powersheel to read system logs on a local machine was definitely a learning experience
 
-**Kusto Query Language (KQL):** I had never even heard of KPL before completing this lab. Using Azure's query language to clean the log data within Azure definitely took longer than expected, but it was well worth it.
+**Kusto Query Language (KQL):** I had never used KQL before completing this lab. Learning to use Azure's query language to clean the log data within Azure definitely took longer than expected, but it was well worth it.
 
