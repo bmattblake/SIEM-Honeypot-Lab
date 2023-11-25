@@ -6,7 +6,7 @@ description: >-
 
 # SIEM Honeypot Lab
 
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption><p>Heatmap - Geodata of attackers within Azure Sentinel (SIEM) - Failed RDP login attemps)</p></figcaption></figure>
+<figure><img src=".gitbook/assets/24h.png" alt=""><figcaption><p>Heatmap - Geodata of attackers within Azure Sentinel (SIEM) - Failed RDP login attemps)</p></figcaption></figure>
 
 ## TL;DR
 
@@ -388,13 +388,9 @@ As a reminder, when you are satisfied with your heat map, remember to shut down 
 
 <figure><img src=".gitbook/assets/12h.png" alt=""><figcaption></figcaption></figure>
 
-### IResults After 24 Hours
+### Results After 24 Hours
 
-
-
-### Results After 1 Week
-
-
+<figure><img src=".gitbook/assets/image (23).png" alt=""><figcaption></figcaption></figure>
 
 ## Takeaways
 
