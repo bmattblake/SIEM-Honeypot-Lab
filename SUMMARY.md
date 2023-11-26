@@ -1,3 +1,3 @@
 # Table of contents
 
-* [SIEM Honeypot Lab](README.md)
+* [Monitoring A Honeypot Using Sentinel (SIEM) in Azure](README.md)
