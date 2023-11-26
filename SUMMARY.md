@@ -1,3 +1,3 @@
 # Table of contents
 
-* [Monitoring A Honeypot Using Microsoft Sentinel (SIEM) in Azure](README.md)
+* [Using Microsoft Sentinel (SIEM) To Monitor A Honeypot & Map Live Cyber Attacks](README.md)
