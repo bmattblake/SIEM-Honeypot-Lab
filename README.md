@@ -1,10 +1,4 @@
----
-description: >-
-  Using a SIEM to collect geographic information about failed cyberattacks on a
-  honeypot in the cloud
----
-
-# SIEM Honeypot Lab
+# Using Microsoft Sentinel (SIEM) To Monitor A Honeypot & Map Live Cyber Attacks
 
 <figure><img src=".gitbook/assets/24h.png" alt=""><figcaption><p>Heatmap - Geodata of attackers within Azure Sentinel (SIEM) - Failed RDP login attemps)</p></figcaption></figure>
 
