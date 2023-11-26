@@ -237,7 +237,7 @@ Now we'll implement a PowerShell script to parse the logs of failed login attemp
 
 1. Open **PowerShell ISE** (**Start Menu > "Windows PowerShell ISE"**)
 2. Create. a new file (**File > New)**
-3. Copy the following PowerShell script into the text editor that appears: [https://github.com/joshmadakor1/Sentinel-Lab/blob/main/Custom\_Security\_Log\_Exporter.ps1](https://github.com/joshmadakor1/Sentinel-Lab/blob/main/Custom\_Security\_Log\_Exporter.ps1)
+3. Copy the following PowerShell script into the text editor that appears: [,og_extractor.ps1](log_extractor.ps1)
 4. Get a free API key from ipgeolocation.io (this API key be used to translate IP addresses of attackers to their physical locations)
 
 **Note**: getting the free version of the API will only allow up to 1000 requests per day. If you have the extra money, you may want to spend $15 on the bronze tier subscription for one month. This subscription will give you 150,000 API calls per month, which is more than enough for this lab.
