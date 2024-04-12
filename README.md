@@ -137,7 +137,7 @@ In the search bar at the top of the screen, search for "log analytics workspaces
 
 Once you are brought to the Logs Analytics workspaces dashboard, select **Create log analytics workspace.**
 
-When creating our new logs analytics workspace, make sure to use out **honeypotlab** resource group, and select the region that is closest to you. the rest of the values don't matter much.
+When creating our new logs analytics workspace, make sure to use our **honeypotlab** resource group, and select the region that is closest to you. the rest of the values don't matter much.
 
 <figure><img src=".gitbook/assets/image (7) (1).png" alt=""><figcaption></figcaption></figure>
 
