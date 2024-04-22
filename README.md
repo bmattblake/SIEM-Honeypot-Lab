@@ -262,7 +262,7 @@ Navigate back to the log analytics workspace that we created back in stage 1.2 w
 
 In your log analytics workspace panel, select **Tables** on the right side-panel,
 
-Click **Create > New custom log (DCR-based)**
+Click **Create > New custom log (MMA-based)**
 
 <figure><img src=".gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
 
