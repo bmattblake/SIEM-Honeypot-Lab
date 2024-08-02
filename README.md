@@ -1,5 +1,7 @@
 # Using Microsoft Sentinel (SIEM) To Monitor A Honeypot & Map Live Cyber Attacks
 
+<figure><img src=".gitbook/assets/thumbnail.png" alt=""><figcaption></figcaption></figure>
+
 ## TL;DR
 
 _**Technologies used**: Virtual Machines, Azure Log Analytics Workspace, Azure Sentinel (SIEM), PowerShell, Kusto Query Language (KQL), Geolocation API_
