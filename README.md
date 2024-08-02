@@ -175,7 +175,7 @@ Click **Add** at the bottom of the screen to complete the Microsoft Sentinel set
 
 ## Stage 2: Establishing A Pipeline From Honeypot To Azure
 
-Great! Our environment Seyup is complete. Next, we need to establish a pipeline between our VM and Azure so we can monitor any failed login attempts within Azure.
+Great! Our environment Setup is complete. Next, we need to establish a pipeline between our VM and Azure so we can monitor any failed login attempts within Azure.
 
 We will accomplish this by using a PowerShell Script that will run locally on the VM. It will monitor all Windows logs relating to remote login attempts, and export any useful information to an output file that Azure can use to process the data.
 
@@ -205,7 +205,7 @@ We can use this IP address to log into our VM via a remote desktop client. On Wi
 6. Select **OK**
 7. Accept any certificates that may be required for the connection
 
-On Mac/Linux you will have to use third-party to connect to our virtual machine.
+On Mac/Linux you will need to use third-party software to connect to the virtual machine.
 
 If all goes well, we should be able to see the desktop on our virtual machine.
 
@@ -248,7 +248,7 @@ Now we'll implement a PowerShell script to parse the logs of failed login attemp
 
 <figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
 
-While this script is running Anytime a failed login occurs, the script will output information about the failed login in the output pane at the bottom
+While this script is running anytime a failed login occurs, the script will output information about the failed login in the output pane at the bottom
 
 <figure><img src=".gitbook/assets/Screenshot 2023-11-23 at 8.16.18 PM.png" alt=""><figcaption><p>Take note of the purple output at the bottom</p></figcaption></figure>
 
@@ -270,8 +270,8 @@ The custom log wizard will then ask for a sample log from the user. This sample 
 
 Luckily, the PowerShell script that we ran in stage 2.2 has generated sample data for us, we just need to copy the contents of our output file from our VM to our local machine.
 
-1. Inside of the VM, navigate to "**C:\ProgramData\failed\_rdp.log**". (Note that the **ProgramData** folder is hidden by default).
-2. Copy the contents of that **failed\_rdp.log** to a new text file on your local machine. This file exists outside of our VM and on our main computer.
+1. Inside of the VM, navigate to "**C:\ProgramData\failed\_rdp.log**". (Note that the **ProgramData** folder is hidden by default on Windows 10. You will need to enable the option to view hidden files/folders in the file manager settings).
+2. Copy the contents of that **failed\_rdp.log** to a new text file on your local machine. This file should exist outside of our VM and on our main computer.
 
 <figure><img src=".gitbook/assets/image (6).png" alt=""><figcaption><p>Contents of my log export file on my local machine.</p></figcaption></figure>
 
@@ -296,17 +296,17 @@ In the **Details** panel, we can enter "FAILED\_RDP\_WITH\_GEO" as the custom lo
 
 You will be directed to a summary screen, click **Create**.
 
-Great!, now all of our rules should be set up. To confirm that our pipeline is working correctly, we can navigate to **Logs** in the left side panel in our log analytics workspace, and query the table `FAILED_RDP_WITH_GEO`
+Great! now all of our rules should be set up. To confirm that our pipeline is working correctly, we can navigate to **Logs** in the left side panel in our log analytics workspace, and query the table `FAILED_RDP_WITH_GEO`
 
 Sure enough, we can see our log data in the **RawData** column in our table.
 
-**Note**: This new table may not be immediately available after creating our custom log. Allow up to an hour for Azure to create the pipeline between our VM and Log Analytics workspaces
+**Note**: This new table may not be immediately available after creating our custom log. Allow up to an hour for Azure to create the pipeline between our VM and the Log Analytics workspace.
 
 <figure><img src=".gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
 
 ### 2.4 Data Cleaning
 
-Next, we will have to create custom columns to partition the data in our logs. As it is right now, all of our data is combined into one column, which does not allow us to do much with it. Let's separate our data into different columns so that longitude and latitude attributes have their own columns, The ip\_address attribute has its own column, etc.
+Next, we will have to create custom columns to partition the data in our logs. As it is right now, all of our data is combined into one column, which does not allow us to do much with it. Let's separate our data into different columns so that longitude and latitude attributes have their own columns, the ip\_address attribute has its own column, etc.
 
 We can partition our parameters by using the following KQL query:
 
@@ -388,7 +388,7 @@ As a reminder, when you are satisfied with your heat map, remember to shut down 
 
 ## Takeaways
 
-Before I even completed this lab, attacks already started rolling into The map, and That was only about 2 hours after deploying my virtual machine. I've definitely learned that It doesn't take long for the internet to find vulnerable systems on the public internet.
+Before I completely finished this lab,  I could already see dozens of brute-force attempts rolling in due to the PowerShell script that was running locally on the honeypot, and that was only about 2 hours after deploying my virtual machine. If there's one thing I have learned, it's that It doesn't take long for the internet to find vulnerable systems on the public internet.
 
 Additionally, after completing this lab, I will never be using common usernames such as:
 
@@ -398,7 +398,7 @@ Additionally, after completing this lab, I will never be using common usernames 
 * guest
 * PC
 
-a majority of the failed RDP login attempts were using one of these usernames, and trying hundreds or even thousands of passwords for each. If I had used one of these usernames, there would've been a much higher chance of my honeypot getting breached.
+A majority of the failed RDP login attempts were using one of these usernames, and trying hundreds or even thousands of passwords for each. If I had used one of these usernames, there would've been a much higher chance of my honeypot getting breached.
 
 ### Room For Improvement...
 
