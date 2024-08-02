@@ -10,7 +10,7 @@ In this lab, I created a vulnerable virtual machine, and deployed it to the publ
 
 <figure><img src=".gitbook/assets/Introduction.png" alt=""><figcaption><p>Project Overview</p></figcaption></figure>
 
-Below, I've documented a comprehensive outline detailing a four-stage process. The following step-by-step guide is designed to facilitate seamless progression from start to finish.
+Below, I've documented a comprehensive outline detailing a three-stage process. The following step-by-step guide is designed to facilitate seamless progression from start to finish.
 
 ## Table Of Contents
 
