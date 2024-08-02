@@ -1,6 +1,6 @@
 # Using Microsoft Sentinel (SIEM) To Monitor A Honeypot & Map Live Cyber Attacks
 
-TL;DR
+## TL;DR
 
 _**Technologies used**: Virtual Machines, Azure Log Analytics Workspace, Azure Sentinel (SIEM), PowerShell, Kusto Query Language (KQL), Geolocation API_
 
@@ -382,7 +382,7 @@ As a reminder, when you are satisfied with your heat map, remember to shut down 
 
 ### Results After 24 Hours
 
-<figure><img src=".gitbook/assets/final.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/final (1).png" alt=""><figcaption></figcaption></figure>
 
 ## Takeaways
 
