@@ -1,8 +1,6 @@
 # Using Microsoft Sentinel (SIEM) To Monitor A Honeypot & Map Live Cyber Attacks
 
-<figure><img src=".gitbook/assets/24h.png" alt=""><figcaption><p>Heatmap - Geodata of attackers within Azure Sentinel (SIEM) - Failed RDP login attemps)</p></figcaption></figure>
-
-## TL;DR
+TL;DR
 
 _**Technologies used**: Virtual Machines, Azure Log Analytics Workspace, Azure Sentinel (SIEM), PowerShell, Kusto Query Language (KQL), Geolocation API_
 
@@ -384,7 +382,7 @@ As a reminder, when you are satisfied with your heat map, remember to shut down 
 
 ### Results After 24 Hours
 
-<figure><img src=".gitbook/assets/image (23).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/final.png" alt=""><figcaption></figcaption></figure>
 
 ## Takeaways
 
